@@ -122,7 +122,7 @@ ap = gets.chomp.to_i
  while op != 4
 puts "Ingrese la opcion que desea"
 puts "1. Insertar"
-puts "2. Establecer el orden de la cola"
+puts "2. Establecer el orden"
 puts "3. Eliminar un elemento"
 puts "4. Salir"
 op = gets.chomp.to_i
