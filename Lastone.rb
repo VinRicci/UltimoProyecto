@@ -1,60 +1,25 @@
 
+$cont=0
+
 def limpiar
     system ('clear')
 end
 
  def ver (cola)
-    aux = cola[:frente]
-    auxb = cola[:frente]
-    for x in (1..(cola.size-1))
-        for y in (1..(cola.size-1))
-            if auxb[:valor] > aux[:valor]
-            asd = aux[:valor]
-            aux[:valor] = auxb[:valor]
-            auxb[:valor] = asd
-            end
-         auxb=auxb[:siguiente]
-        end
-        aux= aux[:siguiente]
-        auxb = cola[:frente]
+     limpiar()
+    as = cola[:tope] 
+    $cont+=1
+    while as[:siguiente] != nil
+    $cont+=1
+    puts as[:valor]
+    as=as[:siguiente] 
+    $cont+=1    
     end
-    aux = cola[:frente]
-    while aux != nil
-        puts aux[:valor]
-        aux = aux[:siguiente] 
-    end  
-end
- def verl (lista)
-    aux = lista[:frente]
-    auxb = lista[:frente]
-    for x in (1..(lista.size-1))
-        for y in (1..(lista.size-1))
-            if auxb[:valor] > aux[:valor]
-            asd = aux[:valor]
-            aux[:valor] = auxb[:valor]
-            auxb[:valor] = asd
-            end
-         auxb=auxb[:siguiente]
-        end
-        aux= aux[:siguiente]
-        auxb = lista[:frente]
-    end
-    aux = lista[:frente]
-    while aux != nil
-        puts aux[:valor]
-        aux = aux[:siguiente] 
-    end  
-end
- def eliminar(cola)
-aux = cola[:frente]
-cola[:frente] = nil
-cola[:frente] = aux[:siguiente]
-end
- def eliminarl(lista)
-    aux = lista[:tope]
-    lista[:tope] = nil
-    lista[:tope] = aux[:siguiente]
-end
+    puts as[:valor]
+    puts ''
+    puts ''
+ end
+
  def insertar (cola)
     limpiar()
      print 'Inserte Un Numero: '
@@ -65,15 +30,72 @@ end
         }
     if cola[:esta_vacia] == true
         cola[:tope] = elemento
-        cola[:frente] = elemento
+        cola[:fondo] = elemento
         cola[:esta_vacia] = false
+        cola[:tamaño] = cola[:tamaño] +1 
     else 
-        aux = cola[:tope] 
+        #aux = cola[:tope] 
+        aux=cola[:fondo]
         aux[:siguiente] = elemento 
         elemento[:siguiente] = nil
-        cola[:tope] = elemento
+        #cola[:tope] = elemento
+        cola[:fondo]=elemento
+        cola[:tamaño]=cola[:tamaño]+1
     end
 end
+
+    def eliminar(cola)
+
+        limpiar()    
+        aux = cola[:tope]
+        aux = aux[:siguiente]
+        cola[:tope] = nil
+        cola[:tope] = aux 
+    end
+
+ def verl (lista)
+    aux = lista[:fondo]
+    auxb = lista[:fondo]
+    for x in (1..(lista.size-1))
+        $cont+=1
+        for y in (1..(lista.size-1))
+            $cont+=1
+            if auxb[:valor] > aux[:valor]
+            asd = aux[:valor]
+            aux[:valor] = auxb[:valor]
+            auxb[:valor] = asd
+            $cont+=1
+            end
+         auxb=auxb[:siguiente]
+        end
+        $cont+=1
+        aux= aux[:siguiente]
+        auxb = lista[:fondo]
+        $cont+=1
+    end
+    aux = lista[:fondo]
+    while aux != nil
+        puts aux[:valor]
+        aux = aux[:siguiente] 
+        $cont+=1
+    end  
+end
+
+ def eliminarl(lista)
+    limpiar()    
+    aux = lista
+    aux2 = aux[:siguiente]
+    lista[:tope] = nil
+    lista[:tope] = aux 
+   
+   # aux = lista
+   #if  lista[:tope] = nil
+    #lista[:tope] = aux[:siguiente]
+
+   #end
+    
+end
+
  def insertarl (lista)
     limpiar()
      print 'Inserte Un Numero: '
@@ -84,7 +106,7 @@ end
         }
      if lista[:esta_vacia] == true
         lista[:tope] = elemento
-        lista[:frente] = elemento
+        lista[:fondo] = elemento
         lista[:esta_vacia] = false
     else 
         aux = lista[:tope] 
@@ -93,27 +115,72 @@ end
         lista[:tope] = elemento
     end
 end
+
+def insertarp (pila)
+    limpiar()
+    print 'Inserte Un Numero: '
+    n = gets.chomp.to_i
+    elemento = {
+        valor: n,
+        siguiente: nil
+    }
+    if pila[:esta_vacia]
+        pila[:tope] = elemento
+        pila [:esta_vacia] = false
+    else 
+        tope = pila[:tope]
+        elemento[:siguiente] = tope
+        pila[:tope] = elemento
+    end
+end
+
+def mostrarp (pila)
+        limpiar()
+        elemento = pila[:tope]
+        $cont+=1
+        while elemento[:siguiente] != nil
+            nuevo_elemento = elemento[:siguiente]
+            elemento = nuevo_elemento
+            puts elemento[:valor]
+            $cont+=1
+        end while elemento[:siguiente] != nil
+        gets
+end
+
+def eliminarp (pila)
+
+    limpiar()    
+    aux = pila[:tope]
+    aux = aux[:siguiente]
+    pila[:tope] = nil
+    pila[:tope] = aux 
+
+end
+
+
  cola = {
     tope: nil,
-    frente: nil,
+    fondo: nil,
     max: -1,
+    tamaño:0,
     esta_vacia: true 
 }
  lista ={
     tope: nil,
-    frente: nil,
+    fondo: nil,
     max: -1,
     esta_vacia: true
 }
  pila = {
     tope: nil,
     max: -1,
-    esta_vacia: true
+    esta_vacia: true,
+    esta_llena: false 
 }
  ap =0
 op = 0
  puts "-----------------------------"
-puts "Proyecto 3"
+puts "Proyecto #3"
 puts "En que de sea trabajar?"
 puts "1. Colas"
 puts "2. Pilas"
@@ -122,7 +189,7 @@ ap = gets.chomp.to_i
  while op != 4
 puts "Ingrese la opcion que desea"
 puts "1. Insertar"
-puts "2. Establecer el orden"
+puts "2. Establecer el orden de la cola"
 puts "3. Eliminar un elemento"
 puts "4. Salir"
 op = gets.chomp.to_i
@@ -143,7 +210,7 @@ end
     insertarp(pila)
     end
     if op == 2
-    verp(pila)
+    mostrarp(pila)
     end
     if op == 3 
     eliminarp(pila)
@@ -160,4 +227,8 @@ end
     eliminarl(lista)
     end
 end
- end
+
+end
+
+puts "El método que resulta mas eficiente segun mi punto de vista es pilas"
+puts "con el metodo que usted selecciono se relizan #{$cont} pasos"
